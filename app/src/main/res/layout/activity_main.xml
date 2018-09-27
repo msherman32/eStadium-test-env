@@ -24,4 +24,12 @@
         tools:layout_editor_absoluteX="100dp"
         tools:layout_editor_absoluteY="195dp" />
 
+    <Button
+        android:id="@+id/go_to_hype_meter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to HYPE meter"
+        tools:layout_editor_absoluteX="116dp"
+        tools:layout_editor_absoluteY="348dp" />
+
 </android.support.constraint.ConstraintLayout>
