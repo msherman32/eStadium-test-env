@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i("Acceleration Clicked", "Going to acceleration");
-                Intent i = new Intent(MainActivity.this, Main2Activity.class);
+                Intent i = new Intent(MainActivity.this, AccerometerData.class);
                 startActivity(i);
             }
         });

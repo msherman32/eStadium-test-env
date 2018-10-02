@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Main2Activity">
+    tools:context=".AccerometerData">
 
     <TextView
         android:id="@+id/acceleration_TEXT"
@@ -21,8 +21,24 @@
         android:layout_height="wrap_content"
         android:text="Stop Tracking Movement"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="305dp" />
+        tools:layout_editor_absoluteY="333dp" />
+
+    <Button
+        android:id="@+id/AccelerometerToHype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to Hype Meter"
+        tools:layout_editor_absoluteX="279dp"
+        tools:layout_editor_absoluteY="381dp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="27dp"
+        android:layout_height="141dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="115dp"
+        tools:layout_editor_absoluteY="156dp"></LinearLayout>
 </android.support.constraint.ConstraintLayout>

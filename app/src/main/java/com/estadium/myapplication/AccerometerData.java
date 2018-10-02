@@ -2,6 +2,7 @@ package com.estadium.myapplication;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -13,12 +14,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class Main2Activity extends AppCompatActivity implements SensorEventListener {
+public class AccerometerData extends AppCompatActivity implements SensorEventListener {
 
     private Button stopButton;
     private SensorManager sensorManager;
     private Sensor sensor;
     private TextView text;
+    private Button goToHypeMeter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +31,18 @@ public class Main2Activity extends AppCompatActivity implements SensorEventListe
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+        goToHypeMeter = (Button) findViewById(R.id.go_to_hype_meter);
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onStopClicked();
+            }
+        });
+        goToHypeMeter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(AccerometerData.this, HypeMeter.class);
+                startActivity(i);
             }
         });
     }
