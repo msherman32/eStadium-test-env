@@ -32,7 +32,7 @@
 
         <TextView
             android:id="@+id/hype_level"
-            android:layout_width="388dp"
+            android:layout_width="302dp"
             android:layout_height="wrap_content"
             android:text="[shows data]"
             android:textSize="24sp"

@@ -1,5 +1,6 @@
 package com.estadium.myapplication;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 public class HypeMeter extends AppCompatActivity implements SensorEventListener {
 
+    private static final double HYPE_VALUE = 6.00;
     private SensorManager sensorManager;
     private Sensor sensor;
     private TextView hype_level;
@@ -33,20 +35,24 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
         goToAccelerometerData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HypeMeter.this, AccerometerData.class);
+                unregisterSensor();
+                Intent i = new Intent(HypeMeter.this, AccelerometerData.class);
                 startActivity(i);
             }
         });
+
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void onSensorChanged(SensorEvent event) {
         double resultant = Math.sqrt(
                 Math.pow(event.values[0],2)
                 + Math.pow(event.values[1] - GRAVITY_VAL,2)
                 + Math.pow(event.values[2],2));
-        if (resultant > 6.00) {
+        if (resultant > HYPE_VALUE) {
             hype_level.setText("YES: " + resultant);
+            hype_level.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         } else {
             hype_level.setText("NO: " + resultant);
         }
@@ -56,4 +62,9 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         return;
     }
+
+    private void unregisterSensor() {
+        sensorManager.unregisterListener(this, sensor);
+    }
+
 }

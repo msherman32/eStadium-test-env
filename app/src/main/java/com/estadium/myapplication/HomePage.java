@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class HomePage extends AppCompatActivity {
 
     private Button accelerationButton;
     private Button hypeMeterButton;
@@ -15,13 +15,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.home_page_activity);
         accelerationButton = (Button) findViewById(R.id.go_to_accel_data);
         accelerationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i("Acceleration Clicked", "Going to acceleration");
-                Intent i = new Intent(MainActivity.this, AccerometerData.class);
+                Intent i = new Intent(HomePage.this, AccelerometerData.class);
                 startActivity(i);
             }
         });
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i("HypeMeter Clicked", "Going to hype detector");
-                Intent i = new Intent(MainActivity.this, HypeMeter.class);
+                Intent i = new Intent(HomePage.this, HypeMeter.class);
                 startActivity(i);
             }
         });
