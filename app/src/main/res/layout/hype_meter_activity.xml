@@ -7,6 +7,7 @@
     tools:context=".HypeMeter">
 
     <LinearLayout
+        android:id="@+id/hype_meter_layout"
         android:layout_width="368dp"
         android:layout_height="157dp"
         android:layout_marginStart="8dp"
@@ -26,7 +27,7 @@
             android:id="@+id/hype_detection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Are you HYPE?"
+            android:text="@string/are_you_hype"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="24sp" />
 
@@ -34,7 +35,7 @@
             android:id="@+id/hype_level"
             android:layout_width="302dp"
             android:layout_height="wrap_content"
-            android:text="[shows data]"
+            android:text="@string/shows_data"
             android:textSize="24sp"
             tools:layout_editor_absoluteX="163dp"
             tools:layout_editor_absoluteY="226dp" />
@@ -43,7 +44,7 @@
             android:id="@+id/HypeToAccelerometer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Go to acclerometer data"
+            android:text="@string/go_to_acclerometer_data"
             tools:layout_editor_absoluteX="279dp"
             tools:layout_editor_absoluteY="287dp" />
     </LinearLayout>

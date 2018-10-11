@@ -8,6 +8,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,22 +16,24 @@ import android.widget.TextView;
 
 public class AccelerometerData extends AppCompatActivity implements SensorEventListener {
 
+    private TextView text;
     private Button stopButton;
+    private Button goToHypeMeter;
+
     private SensorManager sensorManager;
     private Sensor sensor;
-    private TextView text;
-    private Button goToHypeMeter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.accelerometer_data_activity);
+
         text = (TextView) findViewById(R.id.acceleration_TEXT);
-        stopButton = (Button) findViewById(R.id.StopButton);
+        stopButton = (Button) findViewById(R.id.stopButton);
+
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-        goToHypeMeter = (Button) findViewById(R.id.go_to_hype_meter);
 
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +42,7 @@ public class AccelerometerData extends AppCompatActivity implements SensorEventL
             }
         });
 
+        goToHypeMeter = (Button) findViewById(R.id.accelerometerToHype);
         goToHypeMeter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

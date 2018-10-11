@@ -9,6 +9,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,8 +27,9 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hype_meter);
+        setContentView(R.layout.hype_meter_activity);
         hype_level = (TextView) findViewById(R.id.hype_level);
+        hype_level.setGravity(Gravity.CENTER);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
@@ -51,10 +53,10 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
                 + Math.pow(event.values[1] - GRAVITY_VAL,2)
                 + Math.pow(event.values[2],2));
         if (resultant > HYPE_VALUE) {
-            hype_level.setText("YES: " + resultant);
+            hype_level.setText("YES: " + resultant + " m/s^2");
             hype_level.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         } else {
-            hype_level.setText("NO: " + resultant);
+            hype_level.setText("NO: " + resultant + " m/s^2");
         }
     }
 

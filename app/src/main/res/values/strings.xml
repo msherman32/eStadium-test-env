@@ -3,4 +3,7 @@
     <string name="acceleration_test">Acceleration Test</string>
     <string name="go_to_acceleration_data">Go to acceleration data</string>
     <string name="go_to_hype_meter">Go to HYPE meter</string>
+    <string name="are_you_hype">Are you HYPE?</string>
+    <string name="shows_data">[shows data]</string>
+    <string name="go_to_acclerometer_data">Go to acclerometer data</string>
 </resources>
