@@ -32,7 +32,7 @@ public class AccelerometerData extends AppCompatActivity implements SensorEventL
         stopButton = (Button) findViewById(R.id.stopButton);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER_UNCALIBRATED); //TODO: change back to regular accelerometer
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         stopButton.setOnClickListener(new View.OnClickListener() {

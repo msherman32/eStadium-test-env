@@ -48,7 +48,7 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
         hype_level = (TextView) findViewById(R.id.hype_level);
         hype_level.setGravity(Gravity.CENTER);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); //TODO use calibrated or uncalibrated accelerometer
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
         goToAccelerometerData = (Button) findViewById(R.id.HypeToAccelerometer);
         goToAccelerometerData.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +65,7 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
     @Override
     public void onSensorChanged(SensorEvent event) {
         float xValue = event.values[0];
-        float yValue = event.values[1] - GRAVITY_VAL;
+        float yValue = event.values[1] - GRAVITY_VAL; //TODO: get rid of this and just use the data as it is
         float zValue = event.values[2];
 
         double resultant = Math.sqrt(Math.pow(xValue, 2)
@@ -98,6 +98,7 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
         } catch (UnsupportedEncodingException e) {
             System.out.println(e.getMessage());
         }
+
         stringEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
         AsyncHttpClient client = new AsyncHttpClient();
