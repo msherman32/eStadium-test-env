@@ -32,8 +32,9 @@ import cz.msebera.android.httpclient.protocol.HTTP;
 public class HypeMeter extends AppCompatActivity implements SensorEventListener {
 
     private static final double HYPE_THRESHOLD = 6.00;
-    private final String route = "http://testapi.vip.gatech.edu/api/accelerometer";
-    private final String contentType = "Application/json";
+    private final String accelerometerRoute = "http://testapi.vip.gatech.edu/api/accelerometer";
+    private final String hypemeterRoute = "http://testapi.vip.gatech.edu/api/hypemeter";
+    private final String contentType = "application/json";
     private final float GRAVITY_VAL = (float) 9.81; //9.80665;
 
     private SensorManager sensorManager;
@@ -68,7 +69,7 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
         float yValue = event.values[1] - GRAVITY_VAL; //TODO: get rid of this and just use the data as it is
         float zValue = event.values[2];
 
-        double resultant = Math.sqrt(Math.pow(xValue, 2)
+        float resultant = (float) Math.sqrt(Math.pow(xValue, 2)
                         + Math.pow(yValue, 2)
                         + Math.pow(zValue, 2));
 
@@ -76,6 +77,7 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
             hype_level.setText("YES: " + resultant + " m/s^2");
             hype_level.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             postToDatabase("mock_user_id", xValue, yValue, zValue);
+            postToDatabase("mock_user_id", resultant);
         } else {
             hype_level.setText("NO: " + resultant + " m/s^2");
         }
@@ -90,7 +92,8 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
         sensorManager.unregisterListener(this, sensor);
     }
 
-    private void postToDatabase(String user_id, double x, double y, double z) {
+    private void postToDatabase(String user_id, float x, float y, float z) {
+        Log.i("Attempt database post", user_id);
         JSONObject jsonObject = createJSON(user_id, x, y, z);
         StringEntity stringEntity = null;
         try {
@@ -102,7 +105,7 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
         stringEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
         AsyncHttpClient client = new AsyncHttpClient();
-        client.post(null, route, stringEntity, contentType, new AsyncHttpResponseHandler() {
+        client.post(null, accelerometerRoute, stringEntity, contentType, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Log.i("Attempt post JSON", "Success: " + statusCode);
@@ -113,6 +116,39 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
                 Log.i("Attempt post JSON", "Failure: " + statusCode);
             }
         });
+    }
+
+    private void postToDatabase(String user_id, float resultant) {
+        Log.i("Attempt database post", user_id);
+        JSONObject resultantJSON = createJSON(user_id, resultant);
+        StringEntity stringEntity = null;
+        try {
+            stringEntity = new StringEntity(resultantJSON.toString());
+        } catch (UnsupportedEncodingException e) {
+            System.out.println(e.getMessage());
+        }
+
+        stringEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post(null, hypemeterRoute, stringEntity, contentType, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                Log.i("Attempt post JSON", "Success: " + statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.i("Attempt post JSON", "Failure: " + statusCode);
+            }
+        });
+    }
+
+    private JSONObject createJSON(String user_id, float resultant) {
+        HashMap<String, Object> schema = new HashMap<>();
+        schema.put("user_id", user_id);
+        schema.put("hypemeter", resultant);
+        return new JSONObject(schema);
     }
 
     @NonNull
