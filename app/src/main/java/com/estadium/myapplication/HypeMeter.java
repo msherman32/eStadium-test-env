@@ -7,8 +7,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -31,7 +33,7 @@ import cz.msebera.android.httpclient.protocol.HTTP;
 
 public class HypeMeter extends AppCompatActivity implements SensorEventListener {
 
-    private static final double HYPE_THRESHOLD = 6.00;
+    private static final double HYPE_THRESHOLD = 10.765;
     private final String accelerometerRoute = "http://testapi.vip.gatech.edu/api/accelerometer";
     private final String hypemeterRoute = "http://testapi.vip.gatech.edu/api/hypemeter";
     private final String contentType = "application/json";
@@ -93,7 +95,7 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
     }
 
     private void postToDatabase(String user_id, float x, float y, float z) {
-        Log.i("Attempt database post", user_id);
+//        Log.i("Attempt database post", user_id);
         JSONObject jsonObject = createJSON(user_id, x, y, z);
         StringEntity stringEntity = null;
         try {
@@ -102,7 +104,7 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
             System.out.println(e.getMessage());
         }
 
-        stringEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+        stringEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, contentType));
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.post(null, accelerometerRoute, stringEntity, contentType, new AsyncHttpResponseHandler() {
