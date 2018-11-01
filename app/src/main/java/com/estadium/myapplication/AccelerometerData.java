@@ -57,6 +57,14 @@ public class AccelerometerData extends AppCompatActivity implements SensorEventL
     }
 
     @Override
+    public void onPause() {
+        //ALways unregsiter the sensor so that we don't get data while not shaking?
+        //Or should this constantly be going on in the background??
+        super.onPause();
+        unregisterSensor();
+    }
+
+    @Override
     public void onSensorChanged(SensorEvent event) {
         Log.i("Sensor changed", "acceleration");
         float xAcceleration = event.values[0];

@@ -1,6 +1,7 @@
 package com.estadium.myapplication;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -31,7 +32,7 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.message.BasicHeader;
 import cz.msebera.android.httpclient.protocol.HTTP;
 
-public class HypeMeter extends AppCompatActivity implements SensorEventListener {
+public class HypeMeter extends AppCompatActivity implements SensorEventListener { //FIXME: change  to Activity
 
     private static final double HYPE_THRESHOLD = 10.765;
     private final String accelerometerRoute = "http://testapi.vip.gatech.edu/api/accelerometer";
@@ -83,6 +84,14 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
         } else {
             hype_level.setText("NO: " + resultant + " m/s^2");
         }
+    }
+
+    @Override
+    public void onPause() {
+        //ALways unregsiter the sensor so that we don't get data while not shaking?
+        //Or should this constantly be going on in the background??
+        super.onPause();
+        unregisterSensor();
     }
 
     @Override
