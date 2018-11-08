@@ -1,20 +1,16 @@
 package com.estadium.myapplication;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -40,8 +36,10 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
     private final String contentType = "application/json";
     private final float GRAVITY_VAL = (float) 9.81; //9.80665;
 
+    private final boolean writeEnable = false; //set to true if we want to the database
     private SensorManager sensorManager;
     private Sensor sensor;
+    private TextView hypeOrNot;
     private TextView hype_level;
     private Button goToAccelerometerData;
 
@@ -50,11 +48,17 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hype_meter_activity);
         hype_level = (TextView) findViewById(R.id.hype_level);
-        hype_level.setGravity(Gravity.CENTER);
+//        hype_level.setGravity(Gravity.CENTER);
+        hypeOrNot = (TextView) findViewById(R.id.hypeOrNot);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); //TODO use calibrated or uncalibrated accelerometer
-        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL, 3000); //todo: add another int to this method to reduce power consumption
         goToAccelerometerData = (Button) findViewById(R.id.HypeToAccelerometer);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         goToAccelerometerData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +73,7 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
     @Override
     public void onSensorChanged(SensorEvent event) {
         float xValue = event.values[0];
-        float yValue = event.values[1] - GRAVITY_VAL; //TODO: get rid of this and just use the data as it is
+        float yValue = event.values[1]; //TODO: get rid of this and just use the data as it is
         float zValue = event.values[2];
 
         float resultant = (float) Math.sqrt(Math.pow(xValue, 2)
@@ -77,21 +81,31 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
                         + Math.pow(zValue, 2));
 
         if (resultant > HYPE_THRESHOLD) {
-            hype_level.setText("YES: " + resultant + " m/s^2");
-            hype_level.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            postToDatabase("mock_user_id", xValue, yValue, zValue);
-            postToDatabase("mock_user_id", resultant);
+            hypeOrNot.setText("YES:");
+            hype_level.setText(resultant + " m/s^2");
+            if (writeEnable) {
+                hype_level.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                postToDatabase("mock_user_id", xValue, yValue, zValue);
+                postToDatabase("mock_user_id", resultant);
+            }
         } else {
-            hype_level.setText("NO: " + resultant + " m/s^2");
+            hypeOrNot.setText("NO:");
+            hype_level.setText(resultant + " m/s^2");
         }
     }
 
     @Override
-    public void onPause() {
+    public void onPause() { //this is the same as leaving the activity
         //ALways unregsiter the sensor so that we don't get data while not shaking?
         //Or should this constantly be going on in the background??
         super.onPause();
         unregisterSensor();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
@@ -104,7 +118,6 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
     }
 
     private void postToDatabase(String user_id, float x, float y, float z) {
-//        Log.i("Attempt database post", user_id);
         JSONObject jsonObject = createJSON(user_id, x, y, z);
         StringEntity stringEntity = null;
         try {
@@ -130,7 +143,6 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
     }
 
     private void postToDatabase(String user_id, float resultant) {
-        Log.i("Attempt database post", user_id);
         JSONObject resultantJSON = createJSON(user_id, resultant);
         StringEntity stringEntity = null;
         try {
@@ -155,6 +167,7 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
         });
     }
 
+    @NonNull
     private JSONObject createJSON(String user_id, float resultant) {
         HashMap<String, Object> schema = new HashMap<>();
         schema.put("user_id", user_id);

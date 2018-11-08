@@ -1,17 +1,13 @@
 package com.estadium.myapplication;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,8 +31,8 @@ public class AccelerometerData extends AppCompatActivity implements SensorEventL
         stopButton = (Button) findViewById(R.id.stopButton);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER_UNCALIBRATED); //TODO: change back to regular accelerometer
-        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); //TODO: change back to regular accelerometer
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL, 3000);
 
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override

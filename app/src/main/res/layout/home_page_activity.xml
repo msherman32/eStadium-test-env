@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gatech"
     tools:context=".HomePage">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="286dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
@@ -20,16 +21,23 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.542">
+        app:layout_constraintVertical_bias="0.762">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="15dp"
-            android:text="@string/acceleration_test"
+            android:layout_height="45dp"
+            android:background="@android:color/darker_gray"
+            android:text="HOME PAGE"
+            android:textSize="25dp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="25dp" />
 
         <Button
             android:id="@+id/go_to_accel_data"
@@ -39,6 +47,10 @@
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="100dp"
             tools:layout_editor_absoluteY="195dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="25dp" />
 
         <Button
             android:id="@+id/go_to_hype_meter"
