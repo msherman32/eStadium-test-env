@@ -36,7 +36,7 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
     private final String contentType = "application/json";
     private final float GRAVITY_VAL = (float) 9.81; //9.80665;
 
-    private final boolean writeEnable = false; //set to true if we want to the database
+    private final boolean writeEnable = true; //set to true if we want to the database
     private SensorManager sensorManager;
     private Sensor sensor;
     private TextView hypeOrNot;
@@ -73,7 +73,7 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
     @Override
     public void onSensorChanged(SensorEvent event) {
         float xValue = event.values[0];
-        float yValue = event.values[1]; //TODO: get rid of this and just use the data as it is
+        float yValue = event.values[1]; //Todo: use gyroscope to calculate which value is UP (receiving gravity)
         float zValue = event.values[2];
 
         float resultant = (float) Math.sqrt(Math.pow(xValue, 2)
@@ -85,8 +85,8 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
             hype_level.setText(resultant + " m/s^2");
             if (writeEnable) {
                 hype_level.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                postToDatabase("mock_user_id", xValue, yValue, zValue);
-                postToDatabase("mock_user_id", resultant);
+                postToDatabase("Tanner's Phone WIFI", xValue, yValue, zValue);
+                postToDatabase("Tanner's Phone WIFI", resultant);
             }
         } else {
             hypeOrNot.setText("NO:");
