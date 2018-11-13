@@ -6,4 +6,8 @@
     <string name="are_you_hype">Are you HYPE?</string>
     <string name="shows_data">[shows data]</string>
     <string name="go_to_acclerometer_data">Go to acclerometer data</string>
+    <string name="title_activity_gpstracker">GPSTracker</string>
+    <string name="latitude">Latitude:</string>
+    <string name="longitude">Longitude:</string>
+    <string name="home">Home</string>
 </resources>
