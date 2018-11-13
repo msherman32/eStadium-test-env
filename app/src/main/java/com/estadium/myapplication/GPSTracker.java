@@ -1,22 +1,26 @@
 package com.estadium.myapplication;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.app.Activity;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class GPSTracker extends Activity {
 
     private LocationManager locationManager;
     private LocationListener locationListener;
     private Button homeButton;
+    private TextView latitude;
+    private TextView longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +28,15 @@ public class GPSTracker extends Activity {
         setContentView(R.layout.activity_gpstracker);
 
         homeButton = (Button) findViewById(R.id.GPStoHome);
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        LocationListener locationListener = new LocationListener() {
+        latitude = (TextView) findViewById(R.id.lat_text);
+        longitude = (TextView) findViewById(R.id.long_text);
+
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-
+                latitude.setText("Latitiude: " + location.getLatitude());
+                longitude.setText("Longitude: " + location.getLongitude());
             }
 
             @Override
@@ -44,7 +52,8 @@ public class GPSTracker extends Activity {
 
             @Override
             public void onProviderDisabled(String provider) {
-
+                Intent intent= new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
             }
         };
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -68,7 +77,7 @@ public class GPSTracker extends Activity {
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(GPSTracker.this, AccelerometerData.class);
+                Intent intent = new Intent(GPSTracker.this, HomePage.class);
                 startActivity(intent);
             }
         });

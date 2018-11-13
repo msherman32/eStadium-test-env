@@ -42,6 +42,7 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
     private TextView hypeOrNot;
     private TextView hype_level;
     private Button goToAccelerometerData;
+    private Button goHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); //TODO use calibrated or uncalibrated accelerometer
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL, 3000); //todo: add another int to this method to reduce power consumption
         goToAccelerometerData = (Button) findViewById(R.id.HypeToAccelerometer);
+        goHome = (Button) findViewById(R.id.hype_meter_to_home);
     }
 
     @Override
@@ -64,6 +66,14 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
             public void onClick(View v) {
                 unregisterSensor();
                 Intent i = new Intent(HypeMeter.this, AccelerometerData.class);
+                startActivity(i);
+            }
+        });
+        goHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                unregisterSensor();
+                Intent i = new Intent(HypeMeter.this, HomePage.class);
                 startActivity(i);
             }
         });

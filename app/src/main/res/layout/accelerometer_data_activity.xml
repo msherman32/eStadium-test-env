@@ -48,6 +48,12 @@
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteY="333dp" />
 
+        <Button
+            android:id="@+id/accelerometer_data_to_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home" />
+
         <TextView
             android:id="@+id/acceleration_TEXT"
             android:layout_width="match_parent"

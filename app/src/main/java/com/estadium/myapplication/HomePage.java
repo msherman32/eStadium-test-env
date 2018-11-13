@@ -11,6 +11,7 @@ public class HomePage extends AppCompatActivity {
 
     private Button accelerationButton;
     private Button hypeMeterButton;
+    private Button gpsTrackerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,15 @@ public class HomePage extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i("HypeMeter Clicked", "Going to hype detector");
                 Intent i = new Intent(HomePage.this, HypeMeter.class);
+                startActivity(i);
+            }
+        });
+        gpsTrackerButton = (Button) findViewById(R.id.go_to_gps_tracker);
+        gpsTrackerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("GPS Tracker Clicked", "Going to gps tracker");
+                Intent i = new Intent(HomePage.this, GPSTracker.class);
                 startActivity(i);
             }
         });

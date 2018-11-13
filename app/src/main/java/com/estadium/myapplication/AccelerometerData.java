@@ -18,6 +18,7 @@ public class AccelerometerData extends AppCompatActivity implements SensorEventL
     private TextView text;
     private Button stopButton;
     private Button goToHypeMeter;
+    private Button goHome;
 
     private SensorManager sensorManager;
     private Sensor sensor;
@@ -29,11 +30,17 @@ public class AccelerometerData extends AppCompatActivity implements SensorEventL
 
         text = (TextView) findViewById(R.id.acceleration_TEXT);
         stopButton = (Button) findViewById(R.id.stopButton);
+        goToHypeMeter = (Button) findViewById(R.id.accelerometerToHype);
+        goHome = (Button) findViewById(R.id.accelerometer_data_to_home);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); //TODO: change back to regular accelerometer
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL, 3000);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,12 +48,20 @@ public class AccelerometerData extends AppCompatActivity implements SensorEventL
             }
         });
 
-        goToHypeMeter = (Button) findViewById(R.id.accelerometerToHype);
         goToHypeMeter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 unregisterSensor();
                 Intent i = new Intent(AccelerometerData.this, HypeMeter.class);
+                startActivity(i);
+            }
+        });
+
+        goHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                unregisterSensor();
+                Intent i = new Intent(AccelerometerData.this, HomePage.class);
                 startActivity(i);
             }
         });

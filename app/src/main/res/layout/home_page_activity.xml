@@ -59,6 +59,16 @@
             android:text="@string/go_to_hype_meter"
             tools:layout_editor_absoluteX="116dp"
             tools:layout_editor_absoluteY="348dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="25dp" />
+
+        <Button
+            android:id="@+id/go_to_gps_tracker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GO TO GPS TRACKER" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
