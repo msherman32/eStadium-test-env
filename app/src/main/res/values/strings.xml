@@ -10,4 +10,5 @@
     <string name="latitude">Latitude:</string>
     <string name="longitude">Longitude:</string>
     <string name="home">Home</string>
+    <string name="request_location">Request Location</string>
 </resources>

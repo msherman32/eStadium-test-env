@@ -27,6 +27,12 @@
             android:layout_height="wrap_content"
             android:text="@string/home" />
 
+        <Button
+            android:id="@+id/gps_request_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/request_location" />
+
         <TextView
             android:id="@+id/lat_text"
             android:layout_width="match_parent"

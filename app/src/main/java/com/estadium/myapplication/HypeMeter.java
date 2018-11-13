@@ -36,7 +36,7 @@ public class HypeMeter extends AppCompatActivity implements SensorEventListener 
     private final String contentType = "application/json";
     private final float GRAVITY_VAL = (float) 9.81; //9.80665;
 
-    private final boolean writeEnable = true; //set to true if we want to the database
+    private final boolean writeEnable = false; //set to true if we want to the database
     private SensorManager sensorManager;
     private Sensor sensor;
     private TextView hypeOrNot;
